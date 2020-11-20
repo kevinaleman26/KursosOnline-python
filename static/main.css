@@ -1,0 +1,56 @@
+body {
+    background: white;
+}
+
+section {
+    background:#25c0b7; 
+    color:white;
+}
+
+footer {
+    background:#b99bea;
+    color:white;
+}
+
+.footer-copyright {
+    background:#4261b5;
+    color: white ;
+}
+
+.jumbotron {
+    color: white;
+    background: #21302f;
+    margin-bottom:0;
+}
+
+.carousel-item {
+    height: 100vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+h1{
+    color: #21302f;
+    font-family: sans-serif;
+    font-size: 1em;
+    animation: Kursos 500ms linear infinite;
+}
+@keyframes Kursos{
+    0%, 100% {
+		text-shadow: -1.5px -1.5px 0 #0ff, 1.5px 1.5px 0 #f00;
+	}
+	25% {
+		text-shadow: 1.5px 1.5px 0 #0ff, -1.5px -1.5px 0 #f00;
+	}
+	50% {
+		text-shadow: 1.5px -1.5px 0 #0ff, 1.5px -1.5px 0 #f00;
+	}
+	75% {
+		text-shadow: -1.5px 1.5px 0 #0ff, -1.5px 1.5px 0 #f00;
+	}
+}

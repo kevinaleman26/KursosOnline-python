@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Acciones de Estudiante</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'main.css') }}">
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container">
+            <a class="navbar-brand" href="#"><h1>KursosOnline</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Salir</a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+        <header>
+            <div class="jumbotron">
+                <div class="container">
+                    <br>
+                    <h1 class="display-2">Administración</h1>
+                    <p class="lead">Aqui podras hacer de todo un poco</p>
+                    <hr>
+                </div>
+            </div>
+        </header>
+        <!-- Inicio - Administrar perfil - titulo -->
+        <section class="py-5">
+            <div class="container">
+                <h1 class="display-4">Administrar de Perfil</h1>
+                <p class="lead">Edita tu Perfil</p>
+                <hr class="my-4">
+            </div>
+        </section>
+        <!-- Fin - Administrar perfil - titulo -->
+        <!-- Inicio - Administrar perfil - detalle  -->
+        <div class="container py-4 text-center">
+            <div class="container">
+                <div class="row my-2">
+                    <div class="col-lg-8 order-lg-2">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content py-4">
+                            <div class="tab-pane active" id="profile">
+                                <h5 class="mb-3">Perfil</h5>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h6>Mi Datos</h6>
+                                        <p>{{ usuario[0].nombre }} {{usuario[0].apellido}}</p>
+                                        <p>{{ usuario[0].correo }}</p>
+                                    </div>
+                                </div>
+                                <!--/row-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 order-lg-1 text-center">
+                        <img src="//placehold.it/500" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+                        <label class="custom-file">
+                            <input type="file" id="file" class="custom-file-input">
+                            <span class="btn btn-primary btn-block">Cambia tu foto</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin - Administrar perfil - detalle  -->
+        <!-- Page Content -->
+        <section class="py-5">
+            <div class="container">
+                <h1 class="display-4">Cursos</h1>
+                <p class="lead">Continua aprendiendo</p>
+                <hr class="my-4">
+            </div>
+        </section>
+        <!-- Inicio - Administrar cursos - detalle  -->
+        <div class="container py-4 text-center">
+            <!-- Nav pills -->
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#misCursos">Mis Cursos</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#busca">Busca nuevos cursos</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane container active" id="misCursos">
+                    <h2>Listado de Cursos</h2>
+                    <p>Detalle del cursos</p>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre del curso</th>
+                            <th>Descripcion del Curso</th>
+                            <th>Costo</th>
+                        </tr>
+                        </thead>
+                        <tbody id="cursosComprados">
+                            {% for cr in cursosComprados %}
+                            <tr>
+                                <td>{{cr.id}}</td>
+                                <td>{{cr.nombre}}</td>
+                                <td>Descripcion del cursos</td>
+                                <td>$1</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane container fade" id="busca">
+                    <div class="row py-4">
+                        {% for curso in cursos %}
+                            <div class="col-4">
+                                <div class="card" >
+                                    <img class="card-img-top" src="https://source.unsplash.com/szFUQoyvrxM/1920x1080" alt="Card image" style="width:100%">
+                                    <div class="card-body">
+                                    <h4 class="card-title">{{curso.nombre}}</h4>
+                                    <p class="card-text">Descripcion del cursos</p>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2" data-id="{{curso.id}}" data-nombre="{{curso.nombre}}" data-descripcion="descripcion" onclick="cargarCurso(this)">Ver más del cursos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin - Administrar cursos - detalle  -->
+        <!-- Footer -->
+        <footer class="page-footer font-small teal pt-4">
+            <!-- Footer Text -->
+            <div class="container text-center text-md-left">
+                <!-- Grid row -->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-md-6 mt-md-0 mt-3">
+                    <!-- Content -->
+                    <h5 class="text-uppercase font-weight-bold">Footer text 1</h5>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil
+                        repudiandae commodi voluptatibus corrupti animi sequi aliquid magnam debitis, maxime quam recusandae
+                        harum esse fugiat. Itaque, culpa?</p>
+                    </div>
+                    <!-- Grid column -->
+                    <hr class="clearfix w-100 d-md-none pb-3">
+                    <!-- Grid column -->
+                    <div class="col-md-6 mb-md-0 mb-3">
+                    <!-- Content -->
+                    <h5 class="text-uppercase font-weight-bold">Footer text 2</h5>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum
+                        commodi aperiam temporibus quod nulla nesciunt aliquid debitis ullam omnis quos ipsam, aspernatur id
+                        excepturi hic.</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+            <!-- Footer Text -->
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">
+                <strong>© 2020 Copyright.</strong>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+        
+        <!-- Inicio -  Modal -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="tituloCurso">Comprar cursos - Nombre curso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <img class="img" src="https://source.unsplash.com/szFUQoyvrxM/1920x1080" alt="Card image" style="width:100%">
+                    <br>
+                    <p id="descripcionCurso">Descripcion</p>
+                    <form id="form-datas">
+                        <input type="hidden" id="inputIdCurso" name="inputIdCurso" value="{{ usuario[0].id }}">
+                        <input type="hidden" id="inputIdDuenio" name="inputIdDuenio" value="{{ usuario[0].id }}">
+                        <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="Comprar">
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Fin -  Modal -->
+        <script>
+            function cargarCurso(data){
+                let cursoId = data.getAttribute("data-id");
+                let cursoNombre = data.getAttribute("data-nombre");
+                let cursoDescripcion = data.getAttribute("data-descripcion");
+
+                $('#tituloCurso').empty();
+                $('#descripcionCurso').empty();
+
+                $('#tituloCurso').append("Comprar cursos -"+cursoNombre);
+                $('#descripcionCurso').append(cursoDescripcion);
+                $('#inputIdCurso').val(cursoId);
+            }
+
+            $("#form-datas").submit((event)=>{
+                
+                event.preventDefault();
+                
+                const data = $("#form-datas").serialize();
+
+                fetch("/cursoscomprados/crear", {
+                  body: data,
+                  headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                  },
+                  method: "post"
+                })
+                .then(resp => {
+                    return resp.json();
+                })
+                .then(resp => {
+                    if(resp.status.code == 'OK'){
+                        alert("Curso creado de forma exitosa");
+                    } else {
+                        alert("Algo salio mal.");
+                    }
+                }).catch( error => {
+                    alert("Algo salio mal.");
+                });
+
+            });
+
+        </script>
+    </body>
+</html>

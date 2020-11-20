@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<head>
+
+    
+    <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
+  
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+      <a class="navbar-brand" href="/"><h1>KursosOnline</h1></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="login">Login</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="register">Registrate</a>
+              </li>
+          </ul>
+      </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <div class="card card-signin my-5">
+            <div class="card-body">
+              <h1 class="card-title text-center">Login</h1>
+              <form class="form-signin" id="form-data">
+                <div class="form-label-group">
+                  <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Correo" required autofocus>
+                  <label for="inputEmail">Correo</label>
+                </div>
+                <div class="form-label-group">
+                  <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Contraseña" required>
+                  <label for="inputPassword">Contraseña</label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Ingresar</button>
+                <hr class="my-4">
+                <a href="register" class="btn btn-secondary btn-lg  btn-block text-uppercase" type="submit"> Registrate</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      $("#form-data").submit((event)=>{
+  
+        event.preventDefault();
+        const data = $("#form-data").serialize();
+  
+        fetch("/usuario/detalle", {
+            body: data,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            method: "post"
+        })
+        .then(resp => {
+          if(resp.status==200){
+            return resp.json();
+          } else {
+            alert("Acceso Denegado");
+            return;
+          }
+        })
+        .then(resp => {
+          resp.body.forEach(element => {
+            if(element.role === 1){
+              location.href="/adminProfesor/"+element.id;
+            } else {
+              location.href="/adminEstudiantes/"+element.id;
+            }
+          });
+        })
+        .catch( error => {
+          alert("Algo salio mal.");
+        });  
+      });
+      
+      </script>
+
+  </body>
+
+</html>
