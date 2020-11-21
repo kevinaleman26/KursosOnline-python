@@ -322,7 +322,8 @@ def eliminarInscripciones():
 # Paginas
 @app.route('/',methods=['GET'])
 def home():
-    return render_template('index.html')
+    cursosData = Cursos.query.all()
+    return render_template('index.html',cursos = cursosData)
 
 @app.route('/register',methods=['GET'])
 def register():
