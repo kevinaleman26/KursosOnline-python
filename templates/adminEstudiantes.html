@@ -120,7 +120,6 @@
                                 <td>{{cr.id}}</td>
                                 <td>{{cr.nombre}}</td>
                                 <td>{{cr.descripcion}}</td>
-                                <td>${{cr.precio}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -131,7 +130,7 @@
                         {% for curso in cursos %}
                             <div class="col-4">
                                 <div class="card" >
-                                    <img class="card-img-top" src="https://source.unsplash.com/szFUQoyvrxM/1920x1080" alt="Card image" style="width:100%">
+                                    <img class="card-img-top" src="{{curso.imgURL}}" alt="Card image" style="width:100%">
                                     <div class="card-body">
                                     <h4 class="card-title">{{curso.nombre}}</h4>
                                     <p class="card-text">{{curso.descripcion}}</p>

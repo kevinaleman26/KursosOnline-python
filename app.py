@@ -127,7 +127,8 @@ class Cursos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(200))
     descripcion = db.Column(db.String(200))
-    precio = db.Column(db.Numeric)
+    imgURL = db.Column(db.String(200))
+    precio = db.Column(db.DECIMAL(10,2))
     idProfesor = db.Column(db.Integer)
     activo = db.Column(db.Integer)
 
@@ -160,7 +161,7 @@ def detalleCurso():
 
 @app.route('/cursos/crear',methods=['POST'])
 def crearCursos():
-    crear = Cursos(nombre=request.form['inputNombre'],descripcion=request.form['inputDescripcion'],precio=request.form['inputPrecio'],idProfesor=request.form['inputIdProfesor'],activo=1)
+    crear = Cursos(imgURL=request.form['inputImgURL'],nombre=request.form['inputNombre'],descripcion=request.form['inputDescripcion'],precio=request.form['inputPrecio'],idProfesor=request.form['inputIdProfesor'],activo=1)
     db.session.add(crear)
     db.session.commit()
     data={}
@@ -304,6 +305,7 @@ def adminEstudiantes(id):
         crComprado['nombre'] = cur[0].nombre
         crComprado['descripcion'] = cur[0].descripcion
         crComprado['precio'] = cur[0].precio
+        crComprado['imgURL'] = cur[0].imgURL
         listaCursos.append(crComprado)
     return render_template('adminEstudiantes.html',usuario=usuarioQuery, cursos=cursosQuery, cursosComprados=listaCursos)
 
