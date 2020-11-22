@@ -126,9 +126,8 @@ def eliminarCursosComprados():
 class Cursos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(200))
-    #descripcion = db.Column(db.String(200))
-    #costo = db.Column(db.Integer)
-    #categorias = db.Column(db.String(200))
+    descripcion = db.Column(db.String(200))
+    precio = db.Column(db.Numeric)
     idProfesor = db.Column(db.Integer)
     activo = db.Column(db.Integer)
 
@@ -161,7 +160,7 @@ def detalleCurso():
 
 @app.route('/cursos/crear',methods=['POST'])
 def crearCursos():
-    crear = Cursos(nombre=request.form['inputNombre'],idProfesor=request.form['inputIdProfesor'],activo=1)
+    crear = Cursos(nombre=request.form['inputNombre'],descripcion=request.form['inputDescripcion'],precio=request.form['inputPrecio'],idProfesor=request.form['inputIdProfesor'],activo=1)
     db.session.add(crear)
     db.session.commit()
     data={}
@@ -270,55 +269,6 @@ def eliminarUsuario():
 
 #########################################################################################
 
-# CRUD Inscripciones
-class Inscripciones(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    idEstudiante = db.Column(db.Integer)
-    activo = db.Column(db.Integer)
-
-# Rutas Inscripciones
-@app.route('/inscripciones/consulta',methods=['POST'])
-def consultarInscripciones():
-    inscripcionesData = json.dumps(Inscripciones.query.all(), cls=AlchemyEncoder)
-    data={}
-    data['body'] = json.loads(inscripcionesData)
-    data['status'] = {}
-    data['status']['code'] = 'OK'
-    return data
-
-@app.route('/inscripciones/crear',methods=['POST'])
-def crearInscripciones():
-    crear = Inscripciones(idEstudiante=request.form['idEstudiante'], activo=request.form['activo'])
-    db.session.add(crear)
-    db.session.commit()
-    data={}
-    data['status'] = {}
-    data['status']['code'] = 'OK'
-    return data
-
-@app.route('/inscripciones/actualizar',methods=['POST'])
-def actualizarInscripciones():
-    consultar =  Inscripciones.query.filter_by(id=request.form['id']).all()
-    for inscripciones in consultar:
-        inscripciones.idEstudiante = request.form['idEstudiante']
-        inscripciones.activo = request.form['activo']
-        db.session.commit()
-    data={}
-    data['status'] = {}
-    data['status']['code'] = 'OK'
-    return data
-
-@app.route('/inscripciones/eliminar',methods=['POST'])
-def eliminarInscripciones():
-    Inscripciones.query.filter_by(id=request.form['id']).delete()
-    db.session.commit()
-    data={}
-    data['status'] = {}
-    data['status']['code'] = 'OK'
-    return data
-
-#########################################################################################
-
 # Paginas
 @app.route('/',methods=['GET'])
 def home():
@@ -352,6 +302,8 @@ def adminEstudiantes(id):
         crComprado = {}
         crComprado['id'] = cur[0].id
         crComprado['nombre'] = cur[0].nombre
+        crComprado['descripcion'] = cur[0].descripcion
+        crComprado['precio'] = cur[0].precio
         listaCursos.append(crComprado)
     return render_template('adminEstudiantes.html',usuario=usuarioQuery, cursos=cursosQuery, cursosComprados=listaCursos)
 

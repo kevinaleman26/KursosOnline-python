@@ -119,8 +119,8 @@
                             <tr>
                                 <td>{{cr.id}}</td>
                                 <td>{{cr.nombre}}</td>
-                                <td>Descripcion del cursos</td>
-                                <td>$1</td>
+                                <td>{{cr.descripcion}}</td>
+                                <td>${{cr.precio}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -134,8 +134,8 @@
                                     <img class="card-img-top" src="https://source.unsplash.com/szFUQoyvrxM/1920x1080" alt="Card image" style="width:100%">
                                     <div class="card-body">
                                     <h4 class="card-title">{{curso.nombre}}</h4>
-                                    <p class="card-text">Descripcion del cursos</p>
-                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2" data-id="{{curso.id}}" data-nombre="{{curso.nombre}}" data-descripcion="descripcion" onclick="cargarCurso(this)">Ver más del cursos</a>
+                                    <p class="card-text">{{curso.descripcion}}</p>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2" data-id="{{curso.id}}" data-nombre="{{curso.nombre}}" data-descripcion="{{curso.descripcion}}" data-precio="{{curso.precio}}" onclick="cargarCurso(this)">Ver más del cursos</a>
                                     </div>
                                 </div>
                             </div>
@@ -196,6 +196,7 @@
                     <img class="img" src="https://source.unsplash.com/szFUQoyvrxM/1920x1080" alt="Card image" style="width:100%">
                     <br>
                     <p id="descripcionCurso">Descripcion</p>
+                    <p id="precioCurso">$0.00</p>
                     <form id="form-datas">
                         <input type="hidden" id="inputIdCurso" name="inputIdCurso" value="{{ usuario[0].id }}">
                         <input type="hidden" id="inputIdDuenio" name="inputIdDuenio" value="{{ usuario[0].id }}">
@@ -211,13 +212,17 @@
                 let cursoId = data.getAttribute("data-id");
                 let cursoNombre = data.getAttribute("data-nombre");
                 let cursoDescripcion = data.getAttribute("data-descripcion");
+                let cursoPrecio = data.getAttribute("data-precio");
 
                 $('#tituloCurso').empty();
                 $('#descripcionCurso').empty();
+                $('#descripcionCurso').empty();
+                $('#precioCurso').empty();
 
                 $('#tituloCurso').append("Comprar cursos -"+cursoNombre);
                 $('#descripcionCurso').append(cursoDescripcion);
                 $('#inputIdCurso').val(cursoId);
+                $('#precioCurso').val(cursoPrecio);
             }
 
             $("#form-datas").submit((event)=>{
